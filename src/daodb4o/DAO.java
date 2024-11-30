@@ -1,7 +1,7 @@
 /**********************************
  * IFPB - Curso Superior de Tec. em Sist. para Internet
  * Persistencia de Objetos
- * Prof. Fausto Maranhão Ayres
+ * Prof. Fausto Maranhï¿½o Ayres
  **********************************/
 
 package daodb4o;
@@ -57,7 +57,7 @@ public abstract class DAO<T> implements DAOInterface<T> {
 		return (List<T>) q.execute();
 	}
 
-	// --------transação---------------
+	// --------transaï¿½ï¿½o---------------
 	public static void begin() {
 	} // tem que ser vazio
 
@@ -91,7 +91,7 @@ public abstract class DAO<T> implements DAOInterface<T> {
 			else
 				try {
 					// obter objeto com maior id
-					X objeto = resultados.getFirst();
+					X objeto = resultados.get(0);
 					//localizar atributo id dentro do objeto
 					int id = 0;
 					for (Field f : getAllFieldsList(classe)) {
