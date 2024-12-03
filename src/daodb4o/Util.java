@@ -8,7 +8,6 @@ import com.db4o.cs.config.ClientConfiguration;
 
 import modelo.Candidato;
 import modelo.Recrutador;
-import modelo.Empresa;
 import modelo.Vaga;
 public class Util {
 	private static ObjectContainer manager=null;
@@ -27,12 +26,9 @@ public class Util {
 		config.common().objectClass(Candidato.class).cascadeOnDelete(false);
 		config.common().objectClass(Candidato.class).cascadeOnUpdate(true);
 		config.common().objectClass(Candidato.class).cascadeOnActivate(true);
-		config.common().objectClass(Recrutador.class).cascadeOnDelete(false);
+		config.common().objectClass(Recrutador.class).cascadeOnDelete(true);
 		config.common().objectClass(Recrutador.class).cascadeOnUpdate(true);
 		config.common().objectClass(Recrutador.class).cascadeOnActivate(true);
-		config.common().objectClass(Empresa.class).cascadeOnDelete(false);
-		config.common().objectClass(Empresa.class).cascadeOnUpdate(true);
-		config.common().objectClass(Empresa.class).cascadeOnActivate(true);
 		config.common().objectClass(Vaga.class).cascadeOnDelete(false);
 		config.common().objectClass(Vaga.class).cascadeOnUpdate(true);
 		config.common().objectClass(Vaga.class).cascadeOnActivate(true);		
@@ -55,9 +51,6 @@ public class Util {
 		config.common().objectClass(Recrutador.class).cascadeOnDelete(false);
 		config.common().objectClass(Recrutador.class).cascadeOnUpdate(true);
 		config.common().objectClass(Recrutador.class).cascadeOnActivate(true);
-		config.common().objectClass(Empresa.class).cascadeOnDelete(false);
-		config.common().objectClass(Empresa.class).cascadeOnUpdate(true);
-		config.common().objectClass(Empresa.class).cascadeOnActivate(true);
 		config.common().objectClass(Vaga.class).cascadeOnDelete(false);
 		config.common().objectClass(Vaga.class).cascadeOnUpdate(true);
 		config.common().objectClass(Vaga.class).cascadeOnActivate(true);		

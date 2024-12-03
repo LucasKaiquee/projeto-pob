@@ -1,28 +1,26 @@
 package modelo;
 
-import java.util.List;
 
 public class Recrutador {
-    private int id;
+    private String cpf;
     private String nome;
     private String email;
-    private Empresa empresa;
+    private String empresa;
     private Vaga vagaGerenciada;
 
-    public Recrutador(int id, String nome, String email, Empresa empresa, Vaga vaga) {
-        this.id = id;
+    public Recrutador(String cpf, String nome, String email, String empresa) {
+        this.cpf = cpf;
         this.nome = nome;
         this.email = email;
         this.empresa = empresa;
-        this.vagaGerenciada = vaga;
     }
 
-    public int getId() {
-        return this.id;
+    public String getCpf() {
+        return this.cpf;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCPF(String cpf) {
+        this.cpf = cpf;
     }
 
     public String getNome() {
@@ -41,11 +39,11 @@ public class Recrutador {
         this.email = email;
     }
 
-    public Empresa getEmpresa() {
+    public String getEmpresa() {
         return this.empresa;
     }
 
-    public void setEmpresa(Empresa empresa) {
+    public void setEmpresa(String empresa) {
         this.empresa = empresa;
     }
 
@@ -56,4 +54,12 @@ public class Recrutador {
     public Vaga getVagaGerenciada() {
         return this.vagaGerenciada;
     }
+
+    @Override
+    public String toString() {
+        return "Recrutador [cpf=" + cpf + ", nome=" + nome + ", email=" + email + ", empresa=" + empresa
+                + ", vagaGerenciada=" + vagaGerenciada.getDescricao() + "]";
+    }
+
+    
 }

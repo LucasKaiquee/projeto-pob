@@ -1,8 +1,4 @@
-/**********************************
- * IFPB - SI
- * POB - Persistencia de Objetos
- * Prof. Fausto Ayres
- **********************************/
+
 package appswing;
 
 import java.awt.Color;
@@ -137,13 +133,13 @@ public class TelaTelefone {
 						return;
 					}
 					String numero = textField_2.getText();
-					//confirmação
+					//confirmaï¿½ï¿½o
 					Object[] options = { "Confirmar", "Cancelar" };
-					int escolha = JOptionPane.showOptionDialog(null, "Confirma exclusão do telefone "+numero, "Alerta",
+					int escolha = JOptionPane.showOptionDialog(null, "Confirma exclusï¿½o do telefone "+numero, "Alerta",
 							JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 					if(escolha == 0) {
 						Fachada.excluirTelefone(numero);
-						label.setText("exclusão realizada");
+						label.setText("exclusï¿½o realizada");
 						listagem();
 					}
 				}

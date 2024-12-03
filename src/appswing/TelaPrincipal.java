@@ -1,9 +1,4 @@
 package appswing;
-/**********************************
- * IFPB - SI
- * POB - Persistencia de Objetos
- * Prof. Fausto Ayres
- **********************************/
 
 import java.awt.EventQueue;
 import java.awt.Font;

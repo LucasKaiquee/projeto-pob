@@ -12,8 +12,7 @@ public class Vaga {
     private List<Candidato> candidaturas = new ArrayList<>();
     private Recrutador recrutador;
 
-    public Vaga(int id, String descricao, double salario, String area, List<String> requisitos, Recrutador recrutador) {
-        this.id = id;
+    public Vaga(String descricao, double salario, String area, List<String> requisitos, Recrutador recrutador) {
         this.descricao = descricao;
         this.salario = salario;
         this.area = area;
@@ -82,4 +81,12 @@ public class Vaga {
     public void setRecrutador(Recrutador r) {
         this.recrutador = r;
     }
+
+    @Override
+    public String toString() {
+        return "Vaga [id=" + id + ", descricao=" + descricao + ", salario=" + salario + ", area=" + area
+                + ", requisitos=" + requisitos + ", candidaturas=" + candidaturas + ", recrutador=" + recrutador.getNome() + "]";
+    }
+
+
 }

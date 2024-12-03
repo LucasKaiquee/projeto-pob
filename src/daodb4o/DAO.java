@@ -85,7 +85,7 @@ public abstract class DAO<T> implements DAOInterface<T> {
 			else
 				try {
 					// obter objeto com maior id
-					X objeto = resultados.getFirst();
+					X objeto = resultados.get(0);
 					//localizar atributo id dentro do objeto
 					int id = 0;
 					for (Field f : getAllFieldsList(classe)) {
