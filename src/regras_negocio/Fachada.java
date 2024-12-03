@@ -8,7 +8,6 @@ import java.util.List;
 import modelo.Candidato;
 import modelo.Recrutador;
 import modelo.Vaga;
-
 public class Fachada {
 
 	private Fachada() {}
@@ -72,7 +71,11 @@ public class Fachada {
 			throw new Exception("CPF não cadastrado");
 		}
 
-		// Excluir candidato da vaga
+		List<Vaga> vagasAplicadas = c.getvagasAplicadas();
+ 
+		for(Vaga vaga : vagasAplicadas) {
+			vaga.removerCandidatura(c);
+		}
 
 		daocandidato.delete(c);
 		DAO.commit();

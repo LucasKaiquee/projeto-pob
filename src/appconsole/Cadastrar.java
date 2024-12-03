@@ -1,9 +1,7 @@
 package appconsole;
 
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Arrays;
-
+import java.util.List;
 import regras_negocio.Fachada;
 
 public class Cadastrar {
@@ -26,9 +24,13 @@ public class Cadastrar {
 			Fachada.criarVaga("Analista de Dados", 4000.0, "Dados",skills , Fachada.localizarRecrutador("4321"));
 			Fachada.criarVaga("Cientista de Dados", 8000.0, "Dados", skills, Fachada.localizarRecrutador("cancelado"));
 
-			
+			List<String> habilidades = new ArrayList<>();
+			habilidades.add("Java");
+			habilidades.add("SQL");
 			
 			Fachada.criarCandidato("Lucas", "082", "lucas@teste.com", habilidades, "Dev");
+
+		
 		} catch (Exception e) 	{
 			System.out.println(e.getMessage());
 		}

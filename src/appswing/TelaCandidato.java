@@ -9,9 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -24,7 +22,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
-
 import modelo.Candidato;
 import regras_negocio.Fachada;
 
@@ -157,12 +154,13 @@ public class TelaCandidato {
 		label.setBounds(21, 372, 607, 14);
 		frame.getContentPane().add(label);
 
-		button = new JButton("Buscar por nome");
+		button = new JButton("Buscar por cpf");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listagem();
 			}
 		});
+
 		button.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		button.setBounds(175, 27, 149, 23);
 		frame.getContentPane().add(button);
@@ -173,7 +171,7 @@ public class TelaCandidato {
 		textField.setBounds(62, 28, 106, 20);
 		frame.getContentPane().add(textField);
 
-		label_2 = new JLabel("selecione um aluno para editar");
+		label_2 = new JLabel("selecione um candidato para editar");
 		label_2.setBounds(21, 216, 394, 14);
 		frame.getContentPane().add(label_2);
 
@@ -215,7 +213,7 @@ public class TelaCandidato {
 		frame.getContentPane().add(textField_3);
 
 		button_1 = new JButton("Criar");
-		button_1.setToolTipText("cadastrar novo aluno");
+		button_1.setToolTipText("cadastrar novo Candidato");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -324,7 +322,7 @@ public class TelaCandidato {
 
 	public void listagem() {
 		try {
-			List<Candidato> lista = Fachada.listarCandidato();
+			List<Candidato> lista = Fachada.listarCandidatos();
 
 			// objeto model contem todas as linhas e colunas da tabela
 			DefaultTableModel model = new DefaultTableModel();
@@ -364,5 +362,9 @@ public class TelaCandidato {
 		} catch (Exception erro) {
 			label.setText(erro.getMessage());
 		}
+	}
+
+	public static void main(String[] args) {
+		new TelaCandidato();
 	}
 }

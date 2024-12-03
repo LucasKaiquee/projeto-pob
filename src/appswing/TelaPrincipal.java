@@ -49,7 +49,7 @@ public class TelaPrincipal {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setTitle("Agenda");
+		frame.setTitle("ContratAe");
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -61,23 +61,23 @@ public class TelaPrincipal {
 		label.setBounds(0, 0, 444, 249);
 		label.setText("Inicializando...");
 		label.setBounds(0, 0, frame.getWidth(), frame.getHeight());
-		ImageIcon imagem = new ImageIcon(getClass().getResource("/imagens/agenda.jpg"));
-		imagem = new ImageIcon(imagem.getImage().getScaledInstance(label.getWidth(),label.getHeight(), Image.SCALE_DEFAULT));
-		label.setIcon(imagem);
+		// ImageIcon imagem = new ImageIcon(getClass().getResource("/imagens/agenda.jpg"));
+		// imagem = new ImageIcon(imagem.getImage().getScaledInstance(label.getWidth(),label.getHeight(), Image.SCALE_DEFAULT));
+		// label.setIcon(imagem);
 		frame.getContentPane().add(label);
 
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
-		mnPessoa = new JMenu("Pessoa");
+		mnPessoa = new JMenu("Candidato");
 		mnPessoa.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new TelaPessoa();
+				new TelaCandidato();
 			}
 		});
 		menuBar.add(mnPessoa);
 		
-		mnAluno = new JMenu("Aluno");
+		mnAluno = new JMenu("Vaga");
 		mnAluno.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
