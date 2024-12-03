@@ -1,10 +1,3 @@
-/**********************************
- * IFPB - Curso Superior de Tec. em Sist. para Internet
- * POB - Persistencia de Objetos
- * Prof. Fausto Ayres
- *
- */
-
 package daodb4o;
 
 import com.db4o.Db4oEmbedded;
@@ -13,10 +6,10 @@ import com.db4o.config.EmbeddedConfiguration;
 import com.db4o.cs.Db4oClientServer;
 import com.db4o.cs.config.ClientConfiguration;
 
-import modelo.Aluno;
-import modelo.Pessoa;
-import modelo.Telefone;
-
+import modelo.Candidato;
+import modelo.Recrutador;
+import modelo.Empresa;
+import modelo.Vaga;
 public class Util {
 	private static ObjectContainer manager=null;
 
@@ -31,47 +24,45 @@ public class Util {
 		config.common().messageLevel(0);  // mensagens na tela 0(desliga),1,2,3...
 		
 		// habilitar cascata para alterar, apagar e recuperar objetos
-		config.common().objectClass(Pessoa.class).cascadeOnDelete(false);;
-		config.common().objectClass(Pessoa.class).cascadeOnUpdate(true);;
-		config.common().objectClass(Pessoa.class).cascadeOnActivate(true);
-		config.common().objectClass(Aluno.class).cascadeOnDelete(false);;
-		config.common().objectClass(Aluno.class).cascadeOnUpdate(true);;
-		config.common().objectClass(Aluno.class).cascadeOnActivate(true);
-		config.common().objectClass(Telefone.class).cascadeOnDelete(false);;
-		config.common().objectClass(Telefone.class).cascadeOnUpdate(true);;
-		config.common().objectClass(Telefone.class).cascadeOnActivate(true);		
+		config.common().objectClass(Candidato.class).cascadeOnDelete(false);
+		config.common().objectClass(Candidato.class).cascadeOnUpdate(true);
+		config.common().objectClass(Candidato.class).cascadeOnActivate(true);
+		config.common().objectClass(Recrutador.class).cascadeOnDelete(false);
+		config.common().objectClass(Recrutador.class).cascadeOnUpdate(true);
+		config.common().objectClass(Recrutador.class).cascadeOnActivate(true);
+		config.common().objectClass(Empresa.class).cascadeOnDelete(false);
+		config.common().objectClass(Empresa.class).cascadeOnUpdate(true);
+		config.common().objectClass(Empresa.class).cascadeOnActivate(true);
+		config.common().objectClass(Vaga.class).cascadeOnDelete(false);
+		config.common().objectClass(Vaga.class).cascadeOnUpdate(true);
+		config.common().objectClass(Vaga.class).cascadeOnActivate(true);		
 		
-		//conexao local
+		
 		manager = Db4oEmbedded.openFile(config, "banco.db4o");
 		return manager;
 	}
 	
 	public static ObjectContainer conectarBancoRemoto(){		
 		if (manager != null)
-			return manager;		//ja tem uma conexao
-
-		//---------------------------------------
-		//configurar e conectar/criar banco remoto
-		//---------------------------------------
+			return manager;		
 
 		ClientConfiguration config = Db4oClientServer.newClientConfiguration( ) ;
 		config.common().messageLevel(0);  // 0,1,2,3...
 
-		config.common().objectClass(Pessoa.class).cascadeOnDelete(false);;
-		config.common().objectClass(Pessoa.class).cascadeOnUpdate(true);;
-		config.common().objectClass(Pessoa.class).cascadeOnActivate(true);
-		config.common().objectClass(Aluno.class).cascadeOnDelete(false);;
-		config.common().objectClass(Aluno.class).cascadeOnUpdate(true);;
-		config.common().objectClass(Aluno.class).cascadeOnActivate(true);
-		config.common().objectClass(Telefone.class).cascadeOnDelete(false);;
-		config.common().objectClass(Telefone.class).cascadeOnUpdate(true);;
-		config.common().objectClass(Telefone.class).cascadeOnActivate(true);		
+		config.common().objectClass(Candidato.class).cascadeOnDelete(false);
+		config.common().objectClass(Candidato.class).cascadeOnUpdate(true);
+		config.common().objectClass(Candidato.class).cascadeOnActivate(true);
+		config.common().objectClass(Recrutador.class).cascadeOnDelete(false);
+		config.common().objectClass(Recrutador.class).cascadeOnUpdate(true);
+		config.common().objectClass(Recrutador.class).cascadeOnActivate(true);
+		config.common().objectClass(Empresa.class).cascadeOnDelete(false);
+		config.common().objectClass(Empresa.class).cascadeOnUpdate(true);
+		config.common().objectClass(Empresa.class).cascadeOnActivate(true);
+		config.common().objectClass(Vaga.class).cascadeOnDelete(false);
+		config.common().objectClass(Vaga.class).cascadeOnUpdate(true);
+		config.common().objectClass(Vaga.class).cascadeOnActivate(true);		
 
-		//Conexão remota 
-		//***************
-		//String ipservidor="localhost";
-		//String ipservidor="10.0.4.43";			// computador do professor (lab)
-		String ipservidor = "54.163.92.174";		// AWS
+		String ipservidor="localhost";
 		manager = Db4oClientServer.openClient(config, ipservidor, 34000,"usuario1","senha1");
 		return manager;
 	}

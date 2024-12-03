@@ -86,7 +86,7 @@ public class TelaPrincipal {
 		mnAluno.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new TelaAluno();
+				new TelaCandidato();
 			}
 		});
 		menuBar.add(mnAluno);

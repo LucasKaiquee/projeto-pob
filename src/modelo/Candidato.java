@@ -47,8 +47,8 @@ public class Candidato {
         return this.habilidades;
     }
 
-    public void setHabilidades(List<String> habilidades) {
-        this.habilidades = habilidades;
+    public void addHabilidade(String habilidades) {
+        this.habilidades.add(habilidades);
     }
 
     public String getArea() {

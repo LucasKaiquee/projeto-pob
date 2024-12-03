@@ -25,9 +25,10 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import modelo.Candidato;
 import regras_negocio.Fachada;
 
-public class TelaAluno {
+public class TelaCandidato {
 	private JDialog frame;
 	private JTable table;
 	private JScrollPane scrollPane;
@@ -55,7 +56,7 @@ public class TelaAluno {
 	/**
 	 * Create the application.
 	 */
-	public TelaAluno() {
+	public TelaCandidato() {
 		initialize();
 	}
 
@@ -77,7 +78,7 @@ public class TelaAluno {
 				Fachada.finalizar();
 			}
 		});
-		frame.setTitle("Alunos");
+		frame.setTitle("ContratAe");
 		frame.setBounds(100, 100, 744, 428);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -95,15 +96,9 @@ public class TelaAluno {
 				try {
 					if (table.getSelectedRow() >= 0) {
 						// pegar o nome, data nascimento e apelidos da pessoa selecionada
-						String nome = (String) table.getValueAt(table.getSelectedRow(), 0);
-						Aluno a = Fachada.localizarAluno(nome);
-						String data = a.getDtNascimento();
-						String nota = a.getNota()+"";
-						textField_1.setText(nome);
-						textField_2.setText(data);
-						textField_3.setText(String.join(",", a.getApelidos()));
-						textField_4.setText("");
-						textField_5.setText(nota);
+						String cpf = (String) table.getValueAt(table.getSelectedRow(), 0);
+						Candidato a = Fachada.localizarCandidato(cpf);
+						textField_1.setText(cpf);
 						label.setText("");
 					}
 				} catch (Exception erro) {
@@ -136,13 +131,13 @@ public class TelaAluno {
 						return;
 					}
 					// pegar o nome na linha selecionada
-					String nome = textField_1.getText();
+					String cpf = textField_1.getText();
 					Object[] options = { "Confirmar", "Cancelar" };
 					int escolha = JOptionPane.showOptionDialog(null,
-							"Esta opera��o apagar� os telefones e remover� as reunioes de " + nome, "Alerta",
+							"Esta opera��o apagar� os telefones e remover� as reunioes de " + cpf, "Alerta",
 							JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 					if (escolha == 0) {
-						Fachada.excluirPessoa(nome);
+						Fachada.excluirCandidato(cpf);
 						label.setText("aluno excluido");
 						listagem(); // listagem
 					} else
@@ -228,17 +223,21 @@ public class TelaAluno {
 						label.setText("nome vazio");
 						return;
 					}
-					String nome = textField_1.getText().trim();
-					String nascimento = textField_2.getText().trim();
-					String[] apelidos = textField_3.getText().trim().split(",");
-					double nota = Double.parseDouble(textField_5.getText().trim());
+					String cpf = textField_1.getText().trim();
+					String nome = textField_2.getText();
+					String email = textField_4.getText();
+					String[] habilidades = textField_3.getText().trim().split(",");
+					String area = textField_5.getText().trim();
 
-					Fachada.criarAluno(nome, nascimento,new ArrayList<>( Arrays.asList(apelidos)), nota);
+					List<String> habList = new ArrayList<>();
+
+					for (String hab : habilidades) {
+						habList.add(hab);
+					}
+					Fachada.criarCandidato(nome, cpf, email, habList, area);
 					String numero = textField_4.getText();
-					if (!numero.isEmpty())
-						Fachada.criarTelefone(nome, numero);
 
-					label.setText("aluno criado");
+					label.setText("Candidato criado");
 					listagem();
 				} catch (Exception ex) {
 					label.setText(ex.getMessage());
@@ -251,29 +250,29 @@ public class TelaAluno {
 
 		button_5 = new JButton("Atualizar");
 		button_5.setToolTipText("atualizar aluno ");
-		button_5.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					if (textField_1.getText().trim().isEmpty()) {
-						label.setText("nome vazio");
-						return;
-					}
-					String nome = textField_1.getText();
-					String nascimento = textField_2.getText();
-					String[] apelidos = textField_3.getText().trim().split(",");
-					double nota = Double.parseDouble(textField_5.getText().trim());
-					Fachada.alterarAluno(nome, nascimento, new ArrayList<>(Arrays.asList(apelidos)), nota);
+		// button_5.addActionListener(new ActionListener() {
+		// 	// public void actionPerformed(ActionEvent e) {
+		// 	// 	try {
+		// 	// 		if (textField_1.getText().trim().isEmpty()) {
+		// 	// 			label.setText("nome vazio");
+		// 	// 			return;
+		// 	// 		}
+		// 	// 		String nome = textField_1.getText();
+		// 	// 		String nascimento = textField_2.getText();
+		// 	// 		String[] apelidos = textField_3.getText().trim().split(",");
+		// 	// 		double nota = Double.parseDouble(textField_5.getText().trim());
+		// 	// 		Fachada.alterarAluno(nome, nascimento, new ArrayList<>(Arrays.asList(apelidos)), nota);
 
-					String numero = textField_4.getText();
-					if (!numero.isEmpty())
-						Fachada.criarTelefone(nome, numero);
-					label.setText("aluno alterado");
-					listagem();
-				} catch (Exception ex2) {
-					label.setText(ex2.getMessage());
-				}
-			}
-		});
+		// 	// 		String numero = textField_4.getText();
+		// 	// 		if (!numero.isEmpty())
+		// 	// 			Fachada.criarTelefone(nome, numero);
+		// 	// 		label.setText("aluno alterado");
+		// 	// 		listagem();
+		// 	// 	} catch (Exception ex2) {
+		// 	// 		label.setText(ex2.getMessage());
+		// 	// 	}
+		// 	// }
+		// });
 		button_5.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		button_5.setBounds(82, 340, 87, 23);
 		frame.getContentPane().add(button_5);
@@ -325,7 +324,7 @@ public class TelaAluno {
 
 	public void listagem() {
 		try {
-			List<Aluno> lista = Fachada.listarAlunos();
+			List<Candidato> lista = Fachada.listarCandidato();
 
 			// objeto model contem todas as linhas e colunas da tabela
 			DefaultTableModel model = new DefaultTableModel();
@@ -340,18 +339,18 @@ public class TelaAluno {
 
 			// criar as linhas da tabela
 			String texto1,texto2;
-			for (Aluno a : lista) {
-				texto1 = String.join(",", a.getApelidos()); // concatena strings
+			for (Candidato c : lista) {
+				texto1 = String.join(",", c.getNome()); // concatena strings
 
-				if (a.getTelefones().size() > 0){
-					texto2 = "";
-					for (Telefone t : a.getTelefones())
-						texto2 +=  t.getNumero() + " ";
-				}
-				else
-					texto2 = "sem telefone";
+				// if (a.getTelefones().size() > 0){
+				// 	texto2 = "";
+				// 	for (Telefone t : a.getTelefones())
+				// 		texto2 +=  t.getNumero() + " ";
+				// }
+				// else
+				// 	texto2 = "sem telefone";
 
-				model.addRow(new Object[] { a.getNome(), a.getDtNascimento(), a.getNota(), texto1, texto2 });
+				model.addRow(new Object[] { c.getNome(), c.getArea(), c.getEmail(), texto1});
 
 			}
 			label_2.setText("resultados: " + lista.size() + " alunos   - selecione uma linha para editar");
