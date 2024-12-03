@@ -87,6 +87,4 @@ public class Vaga {
         return "Vaga [id=" + id + ", descricao=" + descricao + ", salario=" + salario + ", area=" + area
                 + ", requisitos=" + requisitos + ", candidaturas=" + candidaturas + ", recrutador=" + recrutador.getNome() + "]";
     }
-
-
 }

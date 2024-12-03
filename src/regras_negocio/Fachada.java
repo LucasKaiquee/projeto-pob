@@ -112,7 +112,7 @@ public class Fachada {
 	public static void criarRecrutador(String cpf, String nome, String email, String empresa) throws Exception {
 		DAO.begin();
 
-		Recrutador r = daorecrutador.read(cpf); // nome de qualquer pessoa
+		Recrutador r = daorecrutador.read(cpf); 
 		if (r != null) {
 			DAO.rollback();
 			throw new Exception("criar recrutador - cpf ja existe:" + cpf);
@@ -128,10 +128,10 @@ public class Fachada {
 
 		Recrutador recru = daorecrutador.read(recrutador.getCpf());
 		
-		// if (recru.getVagaGerenciada() != null) {
-		// 	DAO.rollback();
-		// 	throw new Exception("criar vaga - vaga ja existe:" + recru.getVagaGerenciada().getId() + " - " + recru.getVagaGerenciada().getDescricao());
-		// }
+		if (recru.getVagaGerenciada() != null) {
+			DAO.rollback();
+			throw new Exception("criar vaga - vaga ja existe:" + recru.getVagaGerenciada().getId() + " - " + recru.getVagaGerenciada().getDescricao());
+		}
 
 		if (recru.getVagaGerenciada() != null){
 			DAO.rollback();
@@ -167,4 +167,39 @@ public class Fachada {
 		DAO.commit();
 	}
 
+	public static void candidatar(Candidato c, Vaga v) throws Exception{
+		Vaga vaga = daovaga.read(v.getId()).get(0);
+
+		if (vaga == null){
+			DAO.rollback();
+			throw new Exception("Vaga não não encontrada");
+		}
+
+		List<Candidato> candidaturas = v.getCandidaturas();
+
+		for(Candidato candidato : candidaturas) {
+			if(candidato.equals(v))
+				throw new Exception("Candidato já aplcou para essa vaga");
+		}
+
+		v.candidatar(c);
+	}
+
+	public static void cancelarCandidatura(Candidato c, Vaga v) throws Exception{
+		Vaga vaga = daovaga.read(v.getId()).get(0);
+
+		if (vaga == null){
+			DAO.rollback();
+			throw new Exception("Vaga não não encontrada");
+		}
+		
+		List<Candidato> candidaturas = v.getCandidaturas();
+
+		for(Candidato candidato : candidaturas) {
+			if(candidato.equals(v))
+				v.removerCandidatura(c);
+			else
+				throw new Exception("Candidato não encontrado");
+		}
+	}
 }
