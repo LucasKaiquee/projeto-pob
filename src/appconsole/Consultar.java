@@ -8,7 +8,7 @@ public class Consultar {
 
 		try {
 			Fachada.inicializar();
-			System.out.println(Fachada.listarRecrutadores());
+			// System.out.println(Fachada.listarRecrutadores());
 			System.out.println();
 			System.out.println(Fachada.listarVagas());
 			
