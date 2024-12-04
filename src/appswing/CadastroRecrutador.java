@@ -49,7 +49,7 @@ public class CadastroRecrutador {
                     DAO.begin();
                     try {
                         Fachada.criarRecrutador(cpf, nome, email, empresa);
-                        new Vagas();
+                        new GerenciarVaga();
                         
                     } catch (Exception ae) {
                         DAO.rollback();

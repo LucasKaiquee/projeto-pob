@@ -1,12 +1,11 @@
 package appswing;
 
-import javax.swing.*;
-
-import regras_negocio.Fachada;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.*;
+import modelo.Recrutador;
+import regras_negocio.Fachada;
 
 public class LoginRecrutador {
     public LoginRecrutador() {
@@ -32,15 +31,14 @@ public class LoginRecrutador {
                     lblMensagem.setForeground(Color.RED);
                 } else {
                     try {
-                        Fachada.localizarRecrutador(cpf);
-                        new Vagas();
+                        Recrutador r = Fachada.localizarRecrutador(cpf);
+                        new GerenciarVaga(r);
 
                     } catch (Exception ae) {
                         JOptionPane.showMessageDialog(frame, ae.getMessage());
                        System.out.println(ae.getMessage());
                        frame.dispose();
                     }
-                    // Aqui você pode adicionar a lógica para validar o CPF
                 }
             }
         });

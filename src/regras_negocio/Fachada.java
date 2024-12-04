@@ -147,6 +147,35 @@ public class Fachada {
 		DAO.commit();
 	}
 
+	public static void alterarVaga(int id, String descricao, Double salario, String area, List<String> requisitos) throws Exception {
+		DAO.begin();
+		Vaga vaga = daovaga.read(id).get(0);
+	
+		if (vaga == null) {
+			DAO.rollback();
+			throw new Exception("alterar Vaga - vaga não encontrada: " + id);
+		}
+	
+		if (descricao != null && !descricao.trim().isEmpty()) {
+			vaga.setDescricao(descricao);
+		}
+	
+		if (salario != null && salario > 0) {
+			vaga.setSalario(salario);
+		}
+	
+		if (area != null && !area.trim().isEmpty()) {
+			vaga.setArea(area);
+		}
+	
+		if (requisitos != null && !requisitos.isEmpty()) {
+			vaga.setRequisitos(requisitos);
+		}
+	
+		daovaga.update(vaga);
+		DAO.commit();
+	}
+
 	public static void removerVaga(int id) throws Exception{
 		Vaga vaga = daovaga.read(id).get(0);
 
