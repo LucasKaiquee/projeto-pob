@@ -5,9 +5,19 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class InicialRecrutador {
-    public InicialRecrutador() {
-        JFrame frame = new JFrame("ContratAe - Recrutador");
+public class Inicial {
+
+    private String tipoUsuario;
+
+    public String getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public Inicial(String tipoUsuario) {
+
+        this.tipoUsuario = tipoUsuario;
+
+        JFrame frame = new JFrame("ContratAe - Candidato");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 200);
         frame.setLocationRelativeTo(null);
@@ -21,8 +31,8 @@ public class InicialRecrutador {
         // Botão Entrar
         btnEntrar.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                new LoginRecrutador();
+            public void actionPerformed(ActionEvent e) {      
+                new Login(getTipoUsuario());
                 frame.dispose();
             }
         });
@@ -31,8 +41,13 @@ public class InicialRecrutador {
         btnCriarConta.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new CadastroRecrutador();
-                frame.dispose();
+                if(getTipoUsuario().equals("c")){
+                    new CadastroCandidato(getTipoUsuario());
+                    frame.dispose();
+                } else if (getTipoUsuario().equals("r")){
+                    new CadastroRecrutador(getTipoUsuario());
+                    frame.dispose();
+                }
             }
         });
 
@@ -43,8 +58,8 @@ public class InicialRecrutador {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        new InicialRecrutador();
-    }
+
+
+
 }
 

@@ -1,15 +1,23 @@
 package appswing;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
-import modelo.Recrutador;
-import regras_negocio.Fachada;
 
-public class LoginRecrutador {
-    public LoginRecrutador() {
-        JFrame frame = new JFrame("ContratAe - Login do Recrutador");
+public class Login {
+
+    private String tipoUsuario;
+
+    public String getTipoUsuario() {
+        return tipoUsuario;
+    }
+    
+    public Login(String tipoUsuario) {
+
+        this.tipoUsuario = tipoUsuario;
+
+        JFrame frame = new JFrame("ContratAe - Login");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 200);
         frame.setLocationRelativeTo(null);
@@ -30,15 +38,10 @@ public class LoginRecrutador {
                     lblMensagem.setText("CPF não pode estar vazio!");
                     lblMensagem.setForeground(Color.RED);
                 } else {
-                    try {
-                        Recrutador r = Fachada.localizarRecrutador(cpf);
-                        new GerenciarVaga(r);
+                    lblMensagem.setText("Login realizado com sucesso!");
+                    lblMensagem.setForeground(Color.GREEN);
 
-                    } catch (Exception ae) {
-                        JOptionPane.showMessageDialog(frame, ae.getMessage());
-                       System.out.println(ae.getMessage());
-                       frame.dispose();
-                    }
+                    // Aqui você pode adicionar a lógica para validar o CPF
                 }
             }
         });
@@ -51,4 +54,9 @@ public class LoginRecrutador {
         frame.add(panel);
         frame.setVisible(true);
     }
+
+
+
+
 }
+

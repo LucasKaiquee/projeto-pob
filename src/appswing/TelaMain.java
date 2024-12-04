@@ -48,7 +48,7 @@ public class TelaMain {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // JOptionPane.showMessageDialog(frame, "Você escolheu o perfil Candidato.");
-                new InicialCandidato();
+                new Inicial("c");
                 // Aqui você pode abrir a tela específica do Candidato
             }
         });
@@ -56,7 +56,7 @@ public class TelaMain {
         recruiterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new InicialRecrutador();
+                new Inicial("r");
                 // JOptionPane.showMessageDialog(frame, "Você escolheu o perfil Recrutador.");
                 // Aqui você pode abrir a tela específica do Recrutador
             }

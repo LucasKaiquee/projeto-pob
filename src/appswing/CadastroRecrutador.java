@@ -11,7 +11,17 @@ import java.awt.event.ActionListener;
 import regras_negocio.Fachada;
 
 public class CadastroRecrutador {
-    public CadastroRecrutador() {
+
+    private String tipoUsuario;
+
+    public String getTipoUsuario(){
+        return this.tipoUsuario;
+    }
+
+    public CadastroRecrutador(String tipoUsuario) {
+
+        this.tipoUsuario = tipoUsuario;
+
         JFrame frame = new JFrame("ContratAe - Cadastro do Recrutador");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 400);
@@ -45,11 +55,17 @@ public class CadastroRecrutador {
 
                 if (cpf.isEmpty() || nome.isEmpty() || email.isEmpty() || empresa.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "Por favor, preencha todos os campos!", "Erro", JOptionPane.ERROR_MESSAGE);
-                } else {
+                } else if(!cpf.matches("\\d+")){
+                    JOptionPane.showMessageDialog(frame, "Por favor, preencha campo 'cpf' apenas com números!", "Erro", JOptionPane.ERROR_MESSAGE);
+                } else if (!nome.matches("[a-zA-Z]+")){
+                    JOptionPane.showMessageDialog(frame, "Por favor, preencha campo 'nome' apenas com caracteres!", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+                else {
                     DAO.begin();
                     try {
                         Fachada.criarRecrutador(cpf, nome, email, empresa);
-                        new GerenciarVaga();
+                        new GerenciarVaga(Fachada.localizarRecrutador(cpf));
+                        frame.dispose();
                         
                     } catch (Exception ae) {
                         DAO.rollback();

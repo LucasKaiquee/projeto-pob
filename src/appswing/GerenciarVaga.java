@@ -12,7 +12,15 @@ import regras_negocio.Fachada;
 
 public class GerenciarVaga {
 
+    private Recrutador recrutador;
+
+    public Recrutador getRecrutador(){
+        return this.recrutador;
+    }
+
     public GerenciarVaga(Recrutador recrutador) {
+
+        this.recrutador = recrutador;
         
         // Criar o JFrame
         JFrame frame = new JFrame("ContratAe - Gerenciamento de Vagas");
@@ -46,8 +54,8 @@ public class GerenciarVaga {
         JLabel lblRequisitos = new JLabel("Requisitos:");
         JTextField txtRequisitos = new JTextField();
 
-        JLabel lblRecrutador = new JLabel("Recrutador:");
-        JTextField txtRecrutador = new JTextField();
+        // JLabel lblRecrutador = new JLabel("Recrutador:");
+        // JTextField txtRecrutador = new JTextField();
 
         JButton btnAdicionar = new JButton(recrutador.getVagaGerenciada() == null ? "Adicionar Vaga" : "Atualizar Vaga");
         JButton btnExcluir = new JButton("Excluir Vaga");
@@ -61,8 +69,8 @@ public class GerenciarVaga {
         inputPanel.add(txtArea);
         inputPanel.add(lblRequisitos);
         inputPanel.add(txtRequisitos);
-        inputPanel.add(lblRecrutador);
-        inputPanel.add(txtRecrutador);
+        // inputPanel.add(lblRecrutador);
+        // inputPanel.add(txtRecrutador);
 
         // Populando a tabela se existir vaga gerenciada
         if (recrutador.getVagaGerenciada() != null) {
@@ -111,7 +119,8 @@ public class GerenciarVaga {
                         JOptionPane.showMessageDialog(frame, "Vaga atualizada com sucesso!");
                     }
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(frame, "Erro: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    // JOptionPane.showMessageDialog(frame, "Erro: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    System.out.println(ex.getMessage());
                 }
 
                 // Atualizar tabela
@@ -157,6 +166,9 @@ public class GerenciarVaga {
                     recrutador.setVagaGerenciada(null);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(frame, "Erro: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    System.out.println(ex.getMessage());
+                    System.out.println(ex.getCause());
+                    System.out.println(ex.getStackTrace());
                 }
             }
         });

@@ -1,17 +1,25 @@
 package appswing;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import modelo.Candidato;
 import regras_negocio.Fachada;
 import daodb4o.*;
 
 public class CadastroCandidato {
-    public CadastroCandidato() {
+
+    private String tipoUsuario;
+
+    public String getTipoUsuario(){
+        return tipoUsuario;
+    }
+
+    public CadastroCandidato(String tipoUsuario) {
+
+        this.tipoUsuario = tipoUsuario;
+
         JFrame frame = new JFrame("ContratAe - Cadastro do Candidato");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 400);
@@ -46,6 +54,10 @@ public class CadastroCandidato {
                 String email = txtEmail.getText().trim();
                 String area = txtArea.getText().trim();
                 String habilidades = txtHabilidades.getText().trim();
+
+                if(!cpf.matches("\\d+")){
+                    JOptionPane.showMessageDialog(frame, "Por favor, preencha campo apenas com números!", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
 
                 DAO.begin();
 
