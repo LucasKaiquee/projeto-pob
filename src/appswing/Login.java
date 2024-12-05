@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import regras_negocio.Fachada;
 
 public class Login {
 
@@ -42,6 +43,7 @@ public class Login {
                     lblMensagem.setForeground(Color.GREEN);
 
                     // Aqui você pode adicionar a lógica para validar o CPF
+                    Fachada.lis
                 }
             }
         });
@@ -54,9 +56,6 @@ public class Login {
         frame.add(panel);
         frame.setVisible(true);
     }
-
-
-
 
 }
 
