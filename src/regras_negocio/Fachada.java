@@ -78,6 +78,7 @@ public class Fachada {
  
 		for(Vaga vaga : vagasAplicadas) {
 			vaga.removerCandidatura(c);
+			daovaga.update(vaga);
 		}
 
 		daocandidato.delete(c);
@@ -85,21 +86,25 @@ public class Fachada {
 	}
 
 	public static List<Candidato> listarCandidatos(){
+		DAO.begin();
 		List<Candidato> candidatos = daocandidato.readAll();
 		return candidatos;
 	}
 	
 	public static List<Vaga> listarVagas(){
+		DAO.begin();
 		List<Vaga> vagas = daovaga.readAll();
 		return vagas;
 	}
 	
 	public static List<Recrutador> listarRecrutadores(){
+		DAO.begin();
 		List<Recrutador> recrutadores = daorecrutador.readAll();
 		return recrutadores;
 	}
 	
 	public static Recrutador localizarRecrutador(String cpf) throws Exception {
+		DAO.begin();
 		Recrutador r = daorecrutador.read(cpf);
 		if (r == null) {
 			throw new Exception("Recrutador inexistente:" + cpf);
@@ -108,6 +113,7 @@ public class Fachada {
 	}
 
 	public static Vaga localizarVaga(int id) throws Exception {
+		DAO.begin();
 		List<Vaga> v = daovaga.read(id);
 		if(v == null){
 			throw new Exception("Vaga inexistente: " + id);
@@ -146,6 +152,7 @@ public class Fachada {
 
 		Vaga v = new Vaga(descricao, salario, area, requisitos, recrutador);
 		recru.setVagaGerenciada(v);
+		daorecrutador.update(recru);
 		daovaga.create(v);
 		DAO.commit();
 	}
@@ -180,6 +187,7 @@ public class Fachada {
 	}
 
 	public static void removerVaga(int id) throws Exception{
+		DAO.begin();
 		Vaga vaga = daovaga.read(id).get(0);
 
 		if (vaga == null){
@@ -192,6 +200,7 @@ public class Fachada {
 	}
 
 	public static void removerRecrutador(String cpf) throws Exception{
+		DAO.begin();
 		Recrutador recru = daorecrutador.read(cpf);
 
 		if (recru == null){
@@ -203,6 +212,7 @@ public class Fachada {
 	}
 
 	public static void candidatar(Candidato c, Vaga v) throws Exception{
+		DAO.begin();
 		Vaga vaga = daovaga.read(v.getId()).get(0);
 
 		if (vaga == null){
@@ -218,9 +228,13 @@ public class Fachada {
 		}
 
 		v.candidatar(c);
+		daocandidato.update(c);
+		daovaga.update(v);
+		DAO.commit();
 	}
 
 	public static void cancelarCandidatura(Candidato c, Vaga v) throws Exception{
+		DAO.begin();
 		Vaga vaga = daovaga.read(v.getId()).get(0);
 
 		if (vaga == null){
@@ -236,6 +250,10 @@ public class Fachada {
 			else
 				throw new Exception("Candidato não encontrado");
 		}
+
+		daocandidato.update(c);
+		daovaga.update(v);
+		DAO.commit();
 	}
 
 	public static List<Candidato> listarCandidatosPorArea(String area) throws Exception {

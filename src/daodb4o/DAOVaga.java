@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.db4o.query.Query;
 
-import modelo.Candidato;
 import modelo.Vaga;
 
 public class DAOVaga  extends DAO<Vaga>{
