@@ -69,42 +69,46 @@ public abstract class DAO<T> implements DAOInterface<T> {
 	 * 
 	 */
 	public <X> int gerarId(Class<X> classe) {
-		
-		// verificar se o banco esta vazio
+		// Verificar se o banco está vazio
 		if (manager.query(classe).isEmpty()) {
-			return 1; 	// primeiro id da classe
-		} 
-		else {
-			// obter o maior id da classe
+			return 0; // Retorna 0 como primeiro ID
+		} else {
+			// Obter o maior ID da classe
 			Query q = manager.query();
 			q.constrain(classe);
 			q.descend("id").orderDescending();
 			List<X> resultados = q.execute();
-			if (resultados.isEmpty())
-				return 1; // retorna primeiro id
-			else
+	
+			if (resultados.isEmpty()) {
+				return 0; // Retorna 0 como primeiro ID caso não haja resultados
+			} else {
 				try {
-					// obter objeto com maior id
+					// Obter o objeto com o maior ID
 					X objeto = resultados.get(0);
-					//localizar atributo id dentro do objeto
-					int id = 0;
+					int id = -1;
+	
 					for (Field f : getAllFieldsList(classe)) {
 						if (f.getName().equals("id")) {
-							f.setAccessible(true);		//atributo private
-							id = (Integer)f.get(objeto);
+							f.setAccessible(true); // Permitir acesso a atributos privados
+							id = (Integer) f.get(objeto);
+							break; // Campo 'id' encontrado, parar a busca
 						}
 					}
-					if (id == 0)
-						throw new NoSuchFieldException();
-					
-					return id+1;
+	
+					if (id == -1) {
+						throw new NoSuchFieldException("Campo 'id' não encontrado na classe " + classe.getName());
+					}
+	
+					return id + 1; // Incrementar o maior ID encontrado
 				} catch (NoSuchFieldException e) {
-					throw new RuntimeException("classe " + classe + " - nao tem atributo id");
+					throw new RuntimeException("Classe " + classe.getName() + " - não tem atributo 'id'", e);
 				} catch (IllegalAccessException e) {
-					throw new RuntimeException("classe " + classe + " - atributo id inacessivel");
+					throw new RuntimeException("Classe " + classe.getName() + " - atributo 'id' inacessível", e);
 				}
+			}
 		}
 	}
+	
 
 	public static <X> List<Field> getAllFieldsList(final Class<X> cls) {
 		// retorna uma lista com todos os campos do objeto

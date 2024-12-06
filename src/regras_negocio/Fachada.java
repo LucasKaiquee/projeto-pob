@@ -45,7 +45,7 @@ public class Fachada {
 		DAO.commit();
 	}
 
-	public static void alterarCandidato(String cpf, String habilidade, String area) throws Exception {
+	public static void alterarCandidato(String cpf, String novoNome, String novoEmail, String novaArea) throws Exception {
 		DAO.begin();
 		Candidato c = daocandidato.read(cpf);
 		if(c == null) {
@@ -53,11 +53,14 @@ public class Fachada {
 			throw new Exception("CPF não cadastrado");
 		}
 
-		if(habilidade != null) 
-			c.addHabilidade(habilidade);
+		if(novoNome.length() > 0) 
+			c.setNome(novoNome);
 
-		if(area != null) 
-			c.setArea(area);
+		if(novoEmail.length() > 0) 
+			c.setEmail(novoEmail);
+
+		if(novaArea.length() > 0) 
+			c.setArea(novaArea);
 
 		daocandidato.update(c);
 		DAO.commit();
@@ -104,12 +107,12 @@ public class Fachada {
 		return r;
 	}
 
-	public static List<Vaga> localizarVaga(int id) throws Exception {
+	public static Vaga localizarVaga(int id) throws Exception {
 		List<Vaga> v = daovaga.read(id);
 		if(v == null){
 			throw new Exception("Vaga inexistente: " + id);
 		}
-		return v;
+		return v.get(0);
 	}
 
 	public static void criarRecrutador(String cpf, String nome, String email, String empresa) throws Exception {
@@ -210,7 +213,7 @@ public class Fachada {
 		List<Candidato> candidaturas = v.getCandidaturas();
 
 		for(Candidato candidato : candidaturas) {
-			if(candidato.equals(v))
+			if(candidato.equals(c))
 				throw new Exception("Candidato já aplcou para essa vaga");
 		}
 
@@ -228,10 +231,38 @@ public class Fachada {
 		List<Candidato> candidaturas = v.getCandidaturas();
 
 		for(Candidato candidato : candidaturas) {
-			if(candidato.equals(v))
+			if(candidato.equals(c))
 				v.removerCandidatura(c);
 			else
 				throw new Exception("Candidato não encontrado");
 		}
 	}
+
+	public static List<Candidato> listarCandidatosPorArea(String area) throws Exception {
+		DAO.begin();
+		List<Candidato> candidatos = daocandidato.readByArea(area);
+		if (candidatos == null || candidatos.isEmpty()) {
+			throw new Exception("Nenhum candidato encontrado para a área: " + area);
+		}
+		return candidatos;
+	}
+
+	public static List<Vaga> localizarVagasPorArea(String area) throws Exception {
+		DAO.begin();
+		List<Vaga> vagas = daovaga.readByArea(area);
+		if (vagas == null || vagas.isEmpty()) {
+			throw new Exception("Nenhuma vaga encontrada para a área: " + area);
+		}
+		return vagas;
+	}
+
+	public static List<Vaga> localizarVagaComMinimoCandidaturas(int min) throws Exception {
+		DAO.begin();
+		List<Vaga> vagas = daovaga.readVagasComMaisDeNCandidaturas(min);
+		if (vagas == null || vagas.isEmpty()) {
+			throw new Exception("Nenhuma vaga possui mais candidaturas que " + min);
+		}
+		return vagas;
+	}
+	
 }

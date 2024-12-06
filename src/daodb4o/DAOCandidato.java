@@ -16,6 +16,13 @@ public class DAOCandidato extends DAO<Candidato>{
 		else
 			return null;
 	}
+
+	public List<Candidato> readByArea(String area) {
+		Query q = manager.query();
+		q.constrain(Candidato.class);
+		q.descend("area").constrain(area);
+		return q.execute();
+	}
 	
 }
 

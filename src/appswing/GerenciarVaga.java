@@ -14,14 +14,13 @@ public class GerenciarVaga {
 
     private Recrutador recrutador;
 
-    public Recrutador getRecrutador(){
+    public Recrutador getRecrutador() {
         return this.recrutador;
     }
 
     public GerenciarVaga(Recrutador recrutador) {
-
         this.recrutador = recrutador;
-        
+
         // Criar o JFrame
         JFrame frame = new JFrame("ContratAe - Gerenciamento de Vagas");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,11 +50,8 @@ public class GerenciarVaga {
         JLabel lblArea = new JLabel("Área:");
         JTextField txtArea = new JTextField();
 
-        JLabel lblRequisitos = new JLabel("Requisitos:");
+        JLabel lblRequisitos = new JLabel("Requisitos (separados por vírgula):");
         JTextField txtRequisitos = new JTextField();
-
-        // JLabel lblRecrutador = new JLabel("Recrutador:");
-        // JTextField txtRecrutador = new JTextField();
 
         JButton btnAdicionar = new JButton(recrutador.getVagaGerenciada() == null ? "Adicionar Vaga" : "Atualizar Vaga");
         JButton btnExcluir = new JButton("Excluir Vaga");
@@ -69,20 +65,9 @@ public class GerenciarVaga {
         inputPanel.add(txtArea);
         inputPanel.add(lblRequisitos);
         inputPanel.add(txtRequisitos);
-        // inputPanel.add(lblRecrutador);
-        // inputPanel.add(txtRecrutador);
 
         // Populando a tabela se existir vaga gerenciada
-        if (recrutador.getVagaGerenciada() != null) {
-            Vaga vaga = recrutador.getVagaGerenciada();
-            tableModel.addRow(new Object[]{
-                vaga.getId(),
-                vaga.getDescricao(),
-                vaga.getSalario(),
-                vaga.getArea(),
-                vaga.getRecrutador().getNome()
-            });
-        }
+        atualizarTabela(tableModel);
 
         // Ação do botão "Adicionar/Atualizar Vaga"
         btnAdicionar.addActionListener(new ActionListener() {
@@ -119,31 +104,11 @@ public class GerenciarVaga {
                         JOptionPane.showMessageDialog(frame, "Vaga atualizada com sucesso!");
                     }
                 } catch (Exception ex) {
-                    // JOptionPane.showMessageDialog(frame, "Erro: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-                    System.out.println(ex.getMessage());
+                    JOptionPane.showMessageDialog(frame, "Erro: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 }
 
                 // Atualizar tabela
-                tableModel.setRowCount(0);
-                if (recrutador.getVagaGerenciada() != null) {
-                    Vaga vaga = recrutador.getVagaGerenciada();
-                    tableModel.addRow(new Object[]{
-                        vaga.getId(),
-                        vaga.getDescricao(),
-                        vaga.getSalario(),
-                        vaga.getArea(),
-                        vaga.getRecrutador().getNome()
-                    });
-                }
-
-                // Limpar campos
-                txtDescricao.setText("");
-                txtSalario.setText("");
-                txtArea.setText("");
-                txtRequisitos.setText("");
-
-                // Atualizar texto do botão
-                btnAdicionar.setText(recrutador.getVagaGerenciada() == null ? "Adicionar Vaga" : "Atualizar Vaga");
+                atualizarTabela(tableModel);
             }
         });
 
@@ -151,41 +116,46 @@ public class GerenciarVaga {
         btnExcluir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (recrutador.getVagaGerenciada() == null) {
-                    JOptionPane.showMessageDialog(frame, "Nenhuma vaga selecionada para excluir!", "Erro", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
                 try {
-                    int id = recrutador.getVagaGerenciada().getId();
-                    Fachada.removerVaga(id);
-                    JOptionPane.showMessageDialog(frame, "Vaga excluída com sucesso!");
-
-                    // Atualizar tabela e limpar vaga gerenciada
-                    tableModel.setRowCount(0);
-                    recrutador.setVagaGerenciada(null);
+                    if (recrutador.getVagaGerenciada() != null) {
+                        int id = recrutador.getVagaGerenciada().getId();
+                        Fachada.removerVaga(id);
+                        JOptionPane.showMessageDialog(frame, "Vaga excluída com sucesso!");
+                        atualizarTabela(tableModel);
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Nenhuma vaga para excluir!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(frame, "Erro: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-                    System.out.println(ex.getMessage());
-                    System.out.println(ex.getCause());
-                    System.out.println(ex.getStackTrace());
                 }
             }
         });
 
         // Adicionar componentes ao painel principal
-        JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 10));
+        panel.add(scrollPane, BorderLayout.CENTER);
+        panel.add(inputPanel, BorderLayout.NORTH);
+
+        JPanel buttonPanel = new JPanel();
         buttonPanel.add(btnAdicionar);
         buttonPanel.add(btnExcluir);
+        panel.add(buttonPanel, BorderLayout.SOUTH);
 
-        panel.add(scrollPane, BorderLayout.CENTER);
-        panel.add(inputPanel, BorderLayout.SOUTH);
-        panel.add(buttonPanel, BorderLayout.NORTH);
-
-        // Adicionar o painel ao JFrame
+        // Configurar o frame
         frame.add(panel);
-
-        // Tornar a janela visível
         frame.setVisible(true);
+    }
+
+    private void atualizarTabela(DefaultTableModel tableModel) {
+        tableModel.setRowCount(0); // Limpar a tabela
+        if (recrutador.getVagaGerenciada() != null) {
+            Vaga vaga = recrutador.getVagaGerenciada();
+            tableModel.addRow(new Object[]{
+                vaga.getId(),
+                vaga.getDescricao(),
+                vaga.getSalario(),
+                vaga.getArea(),
+                vaga.getRecrutador().getNome()
+            });
+        }
     }
 }

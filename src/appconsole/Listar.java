@@ -7,6 +7,9 @@ public class Listar {
 	public Listar(){
 		try {
 			Fachada.inicializar();
+			System.out.println(Fachada.listarRecrutadores());
+			System.out.println(Fachada.listarCandidatos());
+			System.out.println(Fachada.listarVagas());
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

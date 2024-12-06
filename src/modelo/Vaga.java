@@ -20,6 +20,15 @@ public class Vaga {
         this.recrutador = recrutador;
     }
 
+    public Vaga(int id, String descricao, double salario, String area, List<String> requisitos, Recrutador recrutador) {
+        this.id = id;
+        this.descricao = descricao;
+        this.salario = salario;
+        this.area = area;
+        this.requisitos = requisitos;
+        this.recrutador = recrutador;
+    }
+
     public int getId() {
         return this.id;
     }

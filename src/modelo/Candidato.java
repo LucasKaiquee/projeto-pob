@@ -70,4 +70,14 @@ public class Candidato {
     public List<Vaga> getvagasAplicadas() {
         return this.vagasAplicadas;
     }
+
+    @Override
+    public String toString() {
+        return "Candidato{" +
+            "cpf='" + cpf + '\'' +
+            ", nome='" + nome + '\'' +
+            ", email='" + email + '\'' +
+            ", area='" + area +
+            '}';
+    }
 }

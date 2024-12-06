@@ -1,6 +1,4 @@
 package modelo;
-
-
 public class Recrutador {
     private String cpf;
     private String nome;
@@ -57,8 +55,7 @@ public class Recrutador {
 
     @Override
     public String toString() {
-        return "Recrutador [cpf=" + cpf + ", nome=" + nome + ", email=" + email + ", empresa=" + empresa
-                + ", vagaGerenciada=" + vagaGerenciada.getDescricao() + "]";
+        return "Recrutador [cpf=" + cpf + ", nome=" + nome + ", email=" + email + ", empresa=" + empresa;
     }
 
     

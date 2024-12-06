@@ -20,17 +20,21 @@ public class Cadastrar {
 			skills.add("skill3");
 
 
-			Fachada.criarVaga("Engenheiro de Dados", 6000.0, "Dados",skills , Fachada.localizarRecrutador("1234"));
-			Fachada.criarVaga("Analista de Dados", 4000.0, "Dados",skills , Fachada.localizarRecrutador("4321"));
+			Fachada.criarVaga("Engenheiro de Software", 6000.0, "TI",skills , Fachada.localizarRecrutador("1234"));
+			Fachada.criarVaga("Recrutador", 4000.0, "Rh",skills , Fachada.localizarRecrutador("4321"));
 			Fachada.criarVaga("Cientista de Dados", 8000.0, "Dados", skills, Fachada.localizarRecrutador("cancelado"));
 
 			List<String> habilidades = new ArrayList<>();
 			habilidades.add("Java");
 			habilidades.add("SQL");
 			
-			Fachada.criarCandidato("Lucas", "082", "lucas@teste.com", habilidades, "Dev");
+			Fachada.criarCandidato("Lucas", "082", "lucas@teste.com", habilidades, "TI");
+			Fachada.criarCandidato("Lorena", "1234", "lorena@teste.com", habilidades, "RH");
+			Fachada.criarCandidato("Lucas", "132", "lucas@teste.com", habilidades, "Dados");
 
-		
+			Fachada.candidatar(Fachada.localizarCandidato("082"), Fachada.localizarVaga(1));
+			Fachada.candidatar(Fachada.localizarCandidato("132"), Fachada.localizarVaga(1));
+
 		} catch (Exception e) 	{
 			System.out.println(e.getMessage());
 		}

@@ -1,5 +1,8 @@
 package appconsole;
 
+import java.util.List;
+import modelo.Candidato;
+import modelo.Vaga;
 import regras_negocio.Fachada;
 
 public class Consultar {
@@ -8,10 +11,34 @@ public class Consultar {
 
 		try {
 			Fachada.inicializar();
-			// System.out.println(Fachada.listarRecrutadores());
-			System.out.println();
-			System.out.println(Fachada.listarVagas());
-			
+
+			List<Candidato> candidatosTI = Fachada.listarCandidatosPorArea("TI");
+			for (Candidato candidato : candidatosTI) {
+				System.out.println(candidato);
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+		System.out.println("--------------");
+
+		try {
+			List<Vaga> vagasSemCandidaturas = Fachada.localizarVagaComMinimoCandidaturas(1);
+			for (Vaga v : vagasSemCandidaturas) {
+				System.out.println(v);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+		System.out.println("--------------");
+
+		try {
+			List<Vaga> vagasRh = Fachada.localizarVagasPorArea("Rh");
+			for (Vaga v : vagasRh) {
+				System.out.println(v);
+			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
